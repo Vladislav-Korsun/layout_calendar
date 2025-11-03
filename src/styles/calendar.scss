@@ -1,8 +1,8 @@
 .calendar {
   flex-wrap: wrap;
-  gap: 1px;
-  width: 726px;
-  padding: 10px;
+  gap: $calendar-gap;
+  width: $calendar-width;
+  padding: $calendar-padding;
   display: flex;
 
   &__day {
@@ -18,7 +18,6 @@
     &:hover {
       cursor: pointer;
       background-color: $calendar-hover-bg;
-      transition-duration: 0.5s;
       transform: translateY(-20px);
     }
   }
@@ -26,21 +25,21 @@
   @for $i from 1 through 31 {
     &__day:nth-child(#{$i})::before {
       content: '#{$i}';
-      font-size: 30px;
+      font-size: $calendar-font-size;
       font-family: Arial, sans-serif;
     }
   }
 }
 
-@each $day, $margin in $start-days {
+@each $day, $index in $start-days {
   .calendar--start-day-#{$day} .calendar__day:first-child {
-    margin-left: $margin;
+    margin-left: ($calendar-cell-size + $calendar-gap) * $index;
   }
 }
 
-@each $days, $startHide in $month-lengths {
+@for $days from $min-days through $max-days {
   .calendar--month-length-#{$days} {
-    .calendar__day:nth-child(n + #{$startHide}) {
+    .calendar__day:nth-child(n + #{$days + 1}) {
       display: none;
     }
   }
